@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'my-text-input',
@@ -7,15 +7,17 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class TextInputComponent implements OnInit {
 
-  @Output() textInputed = new EventEmitter;
+  @Output() textInputted = new EventEmitter;
+  @Input() buttonLabel;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
   inputTask(taskInput: HTMLInputElement) {
-    this.textInputed.emit(taskInput.value);
+    this.textInputted.emit(taskInput.value);
     taskInput.value = '';
   }
 }

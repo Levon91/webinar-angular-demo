@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,9 +6,21 @@ import {Component} from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  tasks: Array<string> = [];
+  tasks: Array<Object> = [];
 
   addTask(taskInput: string) {
-    this.tasks.push(taskInput);
+    this.tasks.push({
+      label: taskInput,
+      isComplete: false
+    });
+  }
+
+  completeTask(index: number) {
+    const taskToComplete: any = this.tasks[index];
+    taskToComplete.isComplete = !taskToComplete.isComplete;
+  }
+
+  deleteTask(index: number) {
+    this.tasks.splice(index, 1);
   }
 }
