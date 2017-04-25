@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TodoService } from '../../services/todo.service';
 
 @Component({
   selector: 'my-todo-display',
@@ -8,21 +9,23 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class TodoDisplayComponent implements OnInit {
 
   @Input() tasksToDisplay: Array<Object>;
-  @Output() taskCompleted = new EventEmitter();
-  @Output() taskDeleted = new EventEmitter();
 
-  constructor() {
+  constructor(private todoService: TodoService) {
+    console.log(this.tasksToDisplay);
   }
 
   ngOnInit() {
+    this.tasksToDisplay = this.todoService.getTasks();
   }
 
   completeTask(index) {
-    this.taskCompleted.emit(index);
+    this.todoService.completeTask(index);
+    this.tasksToDisplay = this.todoService.getTasks();
   }
 
   deleteTask(index) {
-    this.taskDeleted.emit(index);
+    this.todoService.deleteTask(index);
+    this.tasksToDisplay = this.todoService.getTasks();
   }
 
   getCompletedButtonText(task) {
@@ -30,6 +33,5 @@ export class TodoDisplayComponent implements OnInit {
       return 'Redo';
     }
     return 'Complete';
-
   }
 }

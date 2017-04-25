@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component} from '@angular/core';
+import {TodoService} from "./services/todo.service";
 
 @Component({
   selector: 'app-root',
@@ -8,19 +9,10 @@ import {Component, EventEmitter, Output} from '@angular/core';
 export class AppComponent {
   tasks: Array<Object> = [];
 
+  constructor(private todoService: TodoService) {
+  }
+
   addTask(taskInput: string) {
-    this.tasks.push({
-      label: taskInput,
-      isComplete: false
-    });
-  }
-
-  completeTask(index: number) {
-    const taskToComplete: any = this.tasks[index];
-    taskToComplete.isComplete = !taskToComplete.isComplete;
-  }
-
-  deleteTask(index: number) {
-    this.tasks.splice(index, 1);
+    this.todoService.addTask(taskInput);
   }
 }
